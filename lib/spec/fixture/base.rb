@@ -31,12 +31,20 @@ class Spec::Fixture::Base
   end
 
   def generate_msg fxt
-    msg = @desc_template
-    [ fxt.members, :msg ].flatten.each do |item|
-      msg = msg.gsub(/:#{item.to_s}/, fxt.__send__(item).to_s)
-    end
+    if @desc_template
+      msg = @desc_template
+      [ fxt._members, :msg ].flatten.each do |item|
+        msg = msg.gsub(/:#{item.to_s}/, fxt.__send__(item).to_s)
+      end
 
-    msg
+      msg
+    else
+      if fxt.msg
+        fxt.msg
+      else
+        ""
+      end
+    end
   end
 
   def run
@@ -44,7 +52,7 @@ class Spec::Fixture::Base
     @binding.module_eval do
       fixture.fixtures.each do |fxt|
         it fixture.generate_msg(fxt) do
-          fixture.example_shared_runner.call(fxt.__input__, fxt.__expected__)
+          fixture.example_shared_runner.call(fxt._input, fxt._expected)
         end
       end
     end
@@ -54,44 +62,7 @@ class Spec::Fixture::Base
   def _define_fixture input, expected
     klass = Class.new
     klass.class_eval do
-      attr_accessor :filter_of, :value_of, :msg
-      [ input, expected ].flatten.each do |item|
-        define_method item do
-          result = @value_of[item]
-          if @filter_of[item].kind_of? Proc
-            result = @filter_of[item].call(result)
-          else
-            if @filter_of[item]
-              [ @filter_of[item] ].flatten.each do |filter|
-                result = result.__send__ filter
-              end
-            end
-          end
-
-          result
-        end
-      end
-
-      define_method :members do
-        [ input, expected].flatten
-      end
-
-      define_method :__expected__ do
-        __send__ expected
-      end
-
-      define_method :__input__ do
-        if input.size == 1
-          __send__(input.first)
-        else
-          result_of = {}
-          input.each do |item|
-            result_of[item] = __send__ item
-          end
-
-          result_of
-        end
-      end
+      attr_reader :filter_of, :value_of, :msg
 
       define_method :initialize do |_input, _expected, msg, filter_of|
         @value_of = {}
@@ -106,6 +77,46 @@ class Spec::Fixture::Base
         end
         @value_of[expected] = _expected
         @msg = msg
+      end
+
+      define_method :_members do
+        [ input, expected].flatten
+      end
+
+      define_method :_expected do
+        __send__ expected
+      end
+
+      define_method :_input do
+        if input.size == 1
+          __send__(input.first)
+        else
+          result_of = {}
+          input.each do |item|
+            result_of[item] = __send__ item
+          end
+
+          result_of
+        end
+      end
+
+      [ input, expected ].flatten.each do |item|
+        raise NameError if methods.map{|i| i.to_s }.include? item
+
+        define_method item do
+          result = @value_of[item]
+          if @filter_of[item].kind_of? Proc
+            result = @filter_of[item].call(result)
+          else
+            if @filter_of[item]
+              [ @filter_of[item] ].flatten.each do |filter|
+                result = result.__send__ filter
+              end
+            end
+          end
+
+          result
+        end
       end
     end
 
