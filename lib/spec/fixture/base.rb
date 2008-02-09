@@ -30,11 +30,27 @@ class Spec::Fixture::Base
     @filter_of = hash
   end
 
+  def desc_filters hash
+    @desc_filter_of = hash
+  end
+
   def generate_msg fxt
     if @desc_template
       msg = @desc_template
       [ fxt._members, :msg ].flatten.each do |item|
-        msg = msg.gsub(/:#{item.to_s}/, fxt.__send__(item).to_s)
+        result = fxt.value_of[item]
+        if @desc_filter_of && @desc_filter_of[item]
+          if @desc_filter_of[item].kind_of? Proc
+            result = @desc_filter_of[item].call(result)
+          else
+            [ @desc_filter_of[item] ].flatten.each do |meth|
+              result = result.__send__ meth
+            end
+          end
+        else
+          result = (item == :msg ) ? result.to_s : result.inspect
+        end
+        msg = msg.gsub(/:#{item.to_s}/, result)
       end
 
       msg

@@ -65,6 +65,10 @@ describe Point, "detect_location" do
       :expected => :to_s,
     })
 
+    desc_filters({
+      :input => lambda {|val| "(#{val.join(', ')})" }
+    })
+
     it "should detect point :input to :expected (:msg)" do |input, expected|
       input.should == expected
     end
