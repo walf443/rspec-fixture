@@ -1,5 +1,4 @@
 require File.join(File.dirname(__FILE__), 'spec_helper')
-require 'spec/fixture'
 
 describe 'with_fixtures' do
   it 'should defined in example group scope' do
