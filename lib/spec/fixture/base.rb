@@ -66,9 +66,11 @@ class Spec::Fixture::Base
   def run
     fixture = self
     @binding.module_eval do
-      fixture.fixtures.each do |fxt|
-        it fixture.generate_msg(fxt) do
-          fixture.example_shared_runner.call(fxt._input, fxt._expected)
+      if fixture.fixtures
+        fixture.fixtures.each do |fxt|
+          it fixture.generate_msg(fxt) do
+            fixture.example_shared_runner.call(fxt._input, fxt._expected)
+          end
         end
       end
     end
@@ -117,7 +119,7 @@ class Spec::Fixture::Base
       end
 
       [ input, expected ].flatten.each do |item|
-        raise NameError if methods.map{|i| i.to_s }.include? item
+        raise NameError if instance_methods.map{|i| i.to_s }.include? item.to_s
 
         define_method item do
           result = @value_of[item]
