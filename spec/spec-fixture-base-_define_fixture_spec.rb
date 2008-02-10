@@ -95,6 +95,8 @@ describe Spec::Fixture::Base do
         @class_instance = @class.new([:foo], :bar, nil, filter)
       end
 
+      it_should_behave_like 'generated_class'
+
       it 'should be applyed filter with sending symbol to raw value' do
         @class_instance.foo.should == 'foo'
         @class_instance._input.should == 'foo'
@@ -112,6 +114,8 @@ describe Spec::Fixture::Base do
         @class_instance = @class.new([:foo], :bar, nil, filter)
       end
 
+      it_should_behave_like 'generated_class'
+
       it 'should be applyed filter with sending symbol in order array to raw value' do
         @class_instance.foo.should == '"foo"'
         @class_instance._input.should == '"foo"'
@@ -128,6 +132,8 @@ describe Spec::Fixture::Base do
         }
         @class_instance = @class.new([:foo], :bar, nil, filter)
       end
+
+      it_should_behave_like 'generated_class'
 
       it 'should be applyed filter with executing Proc' do
         @class_instance.foo.should == 'ooF'
