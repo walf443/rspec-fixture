@@ -16,9 +16,10 @@ Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
   t.spec_opts = ['--options', 'spec/spec.opts']
   t.warning = true
+  t.libs << 'lib'
   t.rcov = true
   t.rcov_dir = 'doc/output/coverage'
-  t.rcov_opts = ['--exclude', 'spec,\.autotest']
+  t.rcov_opts = ['--exclude', '/*,spec,\.autotest', '-i', 'lib/**/*']
 end
 
 desc "Heckle each module and class in turn"
@@ -77,7 +78,7 @@ task :heckle => :spec do
 end
 
 require 'spec/rake/verify_rcov'
-RCov::VerifyTask.new(:rcov => :spec) do |t|
+RCov::VerifyTask.new(:rcov_veryfy) do |t|
   t.index_html = "doc/output/coverage/index.html"
   t.threshold = 100
 end
