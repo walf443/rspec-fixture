@@ -1,4 +1,63 @@
-== 0.0.1 / 2008-02-08
+----------------------------------------------------------------------
+r3507 (orig r6556):  walf443 | 2008-02-11 17:34:20 +0900
 
-* initial release
+lang/ruby/rspec-fixture: added DESCRIPTION for Rakefile
+----------------------------------------------------------------------
+r3505 (orig r6554):  walf443 | 2008-02-11 17:23:32 +0900
 
+lang/ruby/rspec-fixture: wrote README
+----------------------------------------------------------------------
+r3502 (orig r6551):  walf443 | 2008-02-11 16:34:52 +0900
+
+lang/ruby/rspec-fixture: fix example's output message
+----------------------------------------------------------------------
+r3490 (orig r6539):  walf443 | 2008-02-11 13:04:48 +0900
+
+lang/ruby/rspec-fixture: 
+  - fix a bug that is 'not converting collectly :msg in description template'. 
+  - add spec-fixture-base spec.
+----------------------------------------------------------------------
+r3475 (orig r6524):  walf443 | 2008-02-11 01:08:54 +0900
+
+lang/ruby/rspec-fixture: generated class with filter should behave like 'generated_class'
+----------------------------------------------------------------------
+r3474 (orig r6523):  walf443 | 2008-02-11 01:07:59 +0900
+
+lang/ruby/rspec-fixture: load library  not in each spec file, but spec_helper.rb.
+----------------------------------------------------------------------
+r3473 (orig r6522):  walf443 | 2008-02-11 00:59:39 +0900
+
+lang/ruby/rspec-fixture: delete extra file and change to load library in shared helper.
+----------------------------------------------------------------------
+r3472 (orig r6521):  walf443 | 2008-02-11 00:57:32 +0900
+
+lang/ruby/rspec-fixture: add _define_fixture spec and fix some bug.
+----------------------------------------------------------------------
+r3471 (orig r6520):  walf443 | 2008-02-11 00:30:29 +0900
+
+lang/ruby/rspc-fixture: fix spec task for executing coverage test collectly.
+----------------------------------------------------------------------
+r3453 (orig r6502):  walf443 | 2008-02-10 18:52:37 +0900
+
+lang/ruby/rspec-fixture: add spec for with_fixture method
+----------------------------------------------------------------------
+r3415 (orig r6464):  walf443 | 2008-02-10 05:02:25 +0900
+
+lang/ruby/rspec-fixture:
+ - support desc_filters for customizing description flexibly.
+ - change desc_template value to use raw input value's inspect
+----------------------------------------------------------------------
+r3408 (orig r6457):  walf443 | 2008-02-10 01:39:04 +0900
+
+lang/ruby/rspec-fixture: 
+ - raise NameError when with_fixtures arg duplicate to reserved name.
+ - just use msg when description template was not exist.
+----------------------------------------------------------------------
+r3404 (orig r6453):  walf443 | 2008-02-10 00:06:50 +0900
+
+lang/ruby/rspec-fixture: support filters, spec template for description
+----------------------------------------------------------------------
+r3314 (orig r6363):  walf443 | 2008-02-08 09:42:35 +0900
+
+lang/ruby/rspec-fixture: import new project.
+----------------------------------------------------------------------

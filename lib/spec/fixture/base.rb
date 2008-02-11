@@ -11,6 +11,16 @@ class Spec::Fixture::Base
     instance_eval(&block)
   end
 
+  # This &example block was iterate as example by each fixture.
+  # when you specify description for example, 
+  # you can use ":" started string as template variable.
+  # Template variable is expand to raw value's inspect in default 
+  # expect for :msg. If you customize output message, 
+  # please use +desc_filters+.
+  # 
+  # Block should take argumentes in order input, expected.
+  # input was a Hash in input has two or larger members. 
+  # When input has only a member, input has filtered value.
   def it desc=nil, &example
     if desc
       @desc_template = desc
@@ -18,6 +28,9 @@ class Spec::Fixture::Base
     @example_shared_runner = example
   end
 
+  # You specify test data in this methods.
+  # Argument should be Array that has a Hash (and string optionaly).
+  # In Hasy key, you write input data and in its value you write expected data.
   def set_fixtures data
     @fixtures = data.map do |item|
       fxt, msg = *item
@@ -26,15 +39,23 @@ class Spec::Fixture::Base
     end
   end
 
+  # If you specify +filters+, you can use filtered value in +it+'s block
+  # filters argument is hash that has a key of members.
+  # value should be string or symbol or Array that contain strings or symbols or Proc.
+  # In case value is Proc, filtered value is Proc's result.
+  # In case value is Array, each item was applyed using Object#__send__.
+  # In case value is string or symbol, same the above.
   def filters hash
     @filter_of = hash
   end
 
+  # If you customize specify for example, you should use this method.
+  # This methods's usage is the same as +filters+.
   def desc_filters hash
     @desc_filter_of = hash
   end
 
-  def generate_msg fxt
+  def generate_msg fxt #:nodoc:
     if @desc_template
       msg = @desc_template
       [ fxt._members, :msg ].flatten.each do |item|
@@ -67,7 +88,7 @@ class Spec::Fixture::Base
     end
   end
 
-  def run
+  def run #:nodoc:
     fixture = self
     @binding.module_eval do
       if fixture.fixtures
@@ -81,7 +102,7 @@ class Spec::Fixture::Base
   end
 
   # generate temp class for fixture.
-  def _define_fixture input, expected
+  def _define_fixture input, expected #:nodoc:
     klass = Class.new
     klass.class_eval do
       attr_reader :filter_of, :value_of, :msg
