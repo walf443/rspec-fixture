@@ -14,7 +14,7 @@ load File.join(File.dirname(__FILE__), 'tasks', 'basic_config.rake')
 
 NAME              = "rspec-fixture"
 DESCRIPTION       = <<-"END_DESCRIPTION"
-
+Test::Base like DSL for RSpec
 END_DESCRIPTION
 BIN_FILES         = %w(  )
 VERS              = "0.0.1"
@@ -38,7 +38,6 @@ SPEC = Gem::Specification.new do |s|
 	s.rubyforge_project = RUBYFORGE_PROJECT
 	s.bindir            = "bin"
 	s.require_path      = "lib"
-	s.autorequire       = ""
 	s.test_files        = Dir["spec/*_spec.rb"]
 
 	#s.add_dependency('activesupport', '>=1.3.1')
