@@ -1,9 +1,35 @@
 
 = rspec-fixture
+Test::Base like DSL for RSpec
 
 == Synopsis
+  require 'spec'
+  require 'spec/fixture'
+
+  describe Point, "detect_location" do
+    with_fixtures [:x, :y] => :location do
+      filters({ 
+        :location => [:to_s, ] 
+      })
+
+      it 'should detect point (:x, :y) to :location (:msg)' do |input, location|
+        Point.new(input[:x], input[:y]).detect_location.should == location
+      end
+
+      set_fixtures([
+        [ [1,   0]  => :right  ],
+        [{[-1,  0]  => :left }, "border"  ],
+        [{[-0.5,0]  => :left }, "inner" ],
+        [ [0,   1]  => :top  ],
+        [ [0,  -1]  => :bottom ],
+      ])
+    end
+  end
+
+If you'd like to know more usage, see also files that is located under "example" directory and run it.
 
 == Description
+Test::Base is a perl testing library. It make you writing test simple and elegant with many data. RSpec is cool to write a test when it has many context, but it was too boring to write a simple testing with many data. So, I write this.
 
 == Installation
 
@@ -13,7 +39,7 @@
 
 === Gem Installation
 
-	gem install rspecfixture
+	gem install rspec-fixture
 
 == Features/Problems
 
