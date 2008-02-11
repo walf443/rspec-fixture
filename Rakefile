@@ -18,6 +18,7 @@ Test::Base like DSL for RSpec
 END_DESCRIPTION
 BIN_FILES         = %w(  )
 VERS              = "0.0.1"
+RUBYFORGE_PROJECT_ID = 7007
 
 EXTRA_RDOC_FILES = []
 HECKLE_ROOT_MODULES = ["Spec::Fixture"]
