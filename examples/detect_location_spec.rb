@@ -43,14 +43,14 @@ describe Point, "detect_location" do
       :location => :to_s,
     })
 
-    it "should detect point :point to :location (:msg)" do |point, location|
+    it "should detect point :point to :location :msg" do |point, location|
       point.should == location
     end
 
     set_fixtures([
       [ [1,   0]  => :right  ],
-      [{[-1,  0]  => :left }, "border"  ],
-      [{[-0.5,0]  => :left }, "inner" ],
+      [{[-1,  0]  => :left }, "(border case)"  ],
+      [{[-0.5,0]  => :left }, "(inner case)" ],
       [ [0,   1]  => :top  ],
       [ [0,  -1]  => :bottom ],
     ])
@@ -69,14 +69,14 @@ describe Point, "detect_location" do
       :input => lambda {|val| "(#{val.join(', ')})" }
     })
 
-    it "should detect point :input to :expected (:msg)" do |input, expected|
+    it "should detect point :input to :expected :msg" do |input, expected|
       input.should == expected
     end
 
     set_fixtures([
       [ [1,   0]  => :right  ],
-      [{[-1,  0]  => :left }, "border"  ],
-      [{[-0.5,0]  => :left }, "inner" ],
+      [{[-1,  0]  => :left }, "(border case)"  ],
+      [{[-0.5,0]  => :left }, "(inner case)" ],
       [ [0,   1]  => :top  ],
       [ [0,  -1]  => :bottom ],
     ])
