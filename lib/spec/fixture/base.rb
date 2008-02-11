@@ -38,17 +38,21 @@ class Spec::Fixture::Base
     if @desc_template
       msg = @desc_template
       [ fxt._members, :msg ].flatten.each do |item|
-        result = fxt.value_of[item]
-        if @desc_filter_of && @desc_filter_of[item]
-          if @desc_filter_of[item].kind_of? Proc
-            result = @desc_filter_of[item].call(result)
-          else
-            [ @desc_filter_of[item] ].flatten.each do |meth|
-              result = result.__send__ meth
-            end
-          end
+        if item == :msg
+          result = fxt.msg.to_s
         else
-          result = (item == :msg ) ? result.to_s : result.inspect
+          result = fxt.value_of[item]
+          if @desc_filter_of && @desc_filter_of[item]
+            if @desc_filter_of[item].kind_of? Proc
+              result = @desc_filter_of[item].call(result)
+            else
+              [ @desc_filter_of[item] ].flatten.each do |meth|
+                result = result.__send__ meth
+              end
+            end
+          else
+            result = result.inspect
+          end
         end
         msg = msg.gsub(/:#{item.to_s}/, result)
       end
