@@ -3,11 +3,14 @@ class Spec::Fixture::Base
 
   def initialize binding, hash, &block
     @binding = binding
-    input_names, expected_name = *hash.to_a.first
+    input_names, expected_names = *hash.to_a.first
     unless input_names.kind_of? Array
       input_names = [ input_names ]
     end
-    _define_fixture(input_names, expected_name)
+    unless expected_names.kind_of? Array
+      expected_names = [ expected_names ]
+    end
+    _define_fixture(input_names, expected_names)
     instance_eval(&block)
   end
 
@@ -19,8 +22,8 @@ class Spec::Fixture::Base
   # please use +desc_filters+.
   # 
   # Block should take argumentes in order input, expected.
-  # input was a Hash in input has two or larger members. 
-  # When input has only a member, input has filtered value.
+  # input and expected was a Hash in input has two or larger members. 
+  # When input and expected has only a member, input has filtered value.
   def it desc=nil, &example
     if desc
       @desc_template = desc
@@ -110,15 +113,16 @@ class Spec::Fixture::Base
       define_method :initialize do |_input, _expected, msg, filter_of|
         @value_of = {}
         @filter_of = filter_of ? filter_of : {}
-        if input.size == 1
-          key = input.first
-          @value_of[key] = _input
-        else
-          input.zip(_input) do |key, value|
-            @value_of[key] = value
+        [ [input, _input], [expected, _expected] ].each do |input_or_expected|
+          if input_or_expected.first.size == 1
+            key = input_or_expected.first.first
+            @value_of[key] = input_or_expected.last
+          else
+            input_or_expected.first.zip(input_or_expected.last) do |key, value|
+              @value_of[key] = value
+            end
           end
         end
-        @value_of[expected] = _expected
         @msg = msg
       end
 
@@ -126,20 +130,18 @@ class Spec::Fixture::Base
         [ input, expected].flatten
       end
 
-      define_method :_expected do
-        __send__ expected
-      end
+      [ [input, :_input], [expected, :_expected] ].each do |input_or_expected|
+        define_method input_or_expected.last do
+          if input_or_expected.first.size == 1
+            __send__(input_or_expected.first.first)
+          else
+            result_of = {}
+            input_or_expected.first.each do |item|
+              result_of[item] = __send__ item
+            end
 
-      define_method :_input do
-        if input.size == 1
-          __send__(input.first)
-        else
-          result_of = {}
-          input.each do |item|
-            result_of[item] = __send__ item
+            result_of
           end
-
-          result_of
         end
       end
 
