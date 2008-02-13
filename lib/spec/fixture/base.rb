@@ -39,7 +39,7 @@ class Spec::Fixture::Base
       fxt, msg = *item
       input, expected = *fxt.to_a.first
       @class.new input, expected, msg, @filter_of
-    end
+    end.sort_by { rand } # you should write test to pass without order dependency.
   end
 
   # If you specify +filters+, you can use filtered value in +it+'s block
