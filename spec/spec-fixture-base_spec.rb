@@ -112,6 +112,36 @@ describe Spec::Fixture::Base do
     end
   end
 
+  describe '#generate_msg' , "when @desc_template has value and @desc_filter_of has only a String that start from '.'" do
+    before do
+      @fxt = mock(:fixture)
+      @fxt.should_receive(:msg).any_number_of_times.and_return("fuga")
+      @fxt.should_receive(:_members).any_number_of_times.and_return([:input, :expected])
+      @fxt.should_receive(:value_of).any_number_of_times.and_return({
+        :input => "raw value",
+        :expected => "raw value",
+      })
+      @fxt.should_receive(:input).any_number_of_times.and_return("filtered value")
+      @fxt.should_receive(:expected).any_number_of_times.and_return("filtered value")
+      @fixture_base.instance_variable_set('@desc_filter_of', {
+        :input => '.html_escape',
+        :expected => '.html_unescape'
+      })
+    end
+
+    it 'should convert :symbol to desc_filtered member value with sending symbol method to raw value' do
+      [:input, :expected].each do |member|
+        @fixture_base.instance_variable_set('@desc_template', ":#{member}")
+        @fixture_base.generate_msg(@fxt).should == 'raw value'
+      end
+    end
+
+    it 'should convert :msg to fixture#msg value' do
+      @fixture_base.instance_variable_set('@desc_template', ':msg')
+      @fixture_base.generate_msg(@fxt).should == "fuga"
+    end
+  end
+
   describe '#generate_msg' , "when @desc_template has value and @desc_filter_of has :symbol array" do
     before do
       @fxt = mock(:fixture)

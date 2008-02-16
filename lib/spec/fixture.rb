@@ -7,5 +7,6 @@ module Spec
   end
 end
 
+require 'spec/fixture/filter'
 require 'spec/fixture/base'
 require 'spec/fixture/extentions/example/example_group_methods'

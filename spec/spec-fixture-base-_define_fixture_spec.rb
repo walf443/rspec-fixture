@@ -132,6 +132,26 @@ describe Spec::Fixture::Base do
       end
     end
 
+    describe 'generated class with filter', 'when filter value is only a String that start from "."' do
+      before do
+        @class = @fixuture_base._define_fixture([:foo], [:bar])
+        filter = {
+          :foo => '.html_escape',
+          :bar => '.html_unescape',
+        }
+        @class_instance = @class.new(:foo, :bar, nil, filter)
+      end
+
+      it_should_behave_like 'generated_class'
+
+      it 'should be applyed filter with sending symbol to raw value' do
+        @class_instance.foo.should == 'foo'
+        @class_instance._input.should == 'foo'
+        @class_instance.bar.should == 'bar'
+        @class_instance._expected.should == 'bar'
+      end
+    end
+
     describe 'generated class with filter', 'when filter value with symbol array' do
       before do
         @class = @fixuture_base._define_fixture([:foo], [:bar])

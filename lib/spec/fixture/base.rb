@@ -46,8 +46,10 @@ class Spec::Fixture::Base
   # filters argument is hash that has a key of members.
   # value should be string or symbol or Array that contain strings or symbols or Proc.
   # In case value is Proc, filtered value is Proc's result.
-  # In case value is Array, each item was applyed using Object#__send__.
-  # In case value is string or symbol, same the above.
+  # In case value is Array, each item applyed by following rule.
+  # In case item is String that start from ".", for example ".uri", filter use Spec::Fixture::Filter module_functions
+  # Otherwise, Object#__send__ was applyed.
+  # If it has only a filter, you can omit bracket and applyed following above.
   def filters hash
     @filter_of = hash
   end
@@ -70,8 +72,14 @@ class Spec::Fixture::Base
             if @desc_filter_of[item].kind_of? Proc
               result = @desc_filter_of[item].call(result)
             else
-              [ @desc_filter_of[item] ].flatten.each do |meth|
-                result = result.__send__ meth
+              [ @desc_filter_of[item] ].flatten.each do |filter|
+                # XXX: Proc filter can not use in Array. 
+                # It's simple, it think, do all in a proc.
+                if filter.to_s =~ /^\./
+                  result = Spec::Fixture::Filter.__send__(filter.to_s.sub(/^\./, ''), result)
+                else
+                  result = result.__send__ filter
+                end
               end
             end
           else
@@ -155,7 +163,13 @@ class Spec::Fixture::Base
           else
             if @filter_of[item]
               [ @filter_of[item] ].flatten.each do |filter|
-                result = result.__send__ filter
+                # XXX: Proc filter can not use in Array. 
+                # It's simple, it think, do all in a proc.
+                if filter.to_s =~ /^\./
+                  result = Spec::Fixture::Filter.__send__(filter.to_s.sub(/^\./, ''), result)
+                else
+                  result = result.__send__ filter
+                end
               end
             end
           end
