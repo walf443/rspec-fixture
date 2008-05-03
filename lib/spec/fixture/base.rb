@@ -94,7 +94,7 @@ class Spec::Fixture::Base
       if fxt.msg
         fxt.msg
       else
-        ""
+        nil
       end
     end
   end

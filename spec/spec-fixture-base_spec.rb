@@ -39,8 +39,8 @@ describe Spec::Fixture::Base do
       @fxt.should_receive(:msg).and_return(nil)
     end
 
-    it 'should return ""' do
-      @fixture_base.generate_msg(@fxt).should == ""
+    it 'should return nil' do
+      @fixture_base.generate_msg(@fxt).should be_nil
     end
   end
 
