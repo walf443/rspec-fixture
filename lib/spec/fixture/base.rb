@@ -113,7 +113,7 @@ class Spec::Fixture::Base
   end
 
   # generate temp class for fixture.
-  def _define_fixture input, expected #:nodoc:
+  def _define_fixture __input, __expected #:nodoc:
     klass = Class.new
     klass.class_eval do
       attr_reader :filter_of, :value_of, :msg
@@ -121,7 +121,7 @@ class Spec::Fixture::Base
       define_method :initialize do |_input, _expected, msg, filter_of|
         @value_of = {}
         @filter_of = filter_of ? filter_of : {}
-        [ [input, _input], [expected, _expected] ].each do |input_or_expected|
+        [ [__input, _input], [__expected, _expected] ].each do |input_or_expected|
           if input_or_expected.first.size == 1
             key = input_or_expected.first.first
             @value_of[key] = input_or_expected.last
@@ -135,10 +135,10 @@ class Spec::Fixture::Base
       end
 
       define_method :_members do
-        [ input, expected].flatten
+        [ __input, __expected].flatten
       end
 
-      [ [input, :_input], [expected, :_expected] ].each do |input_or_expected|
+      [ [__input, :_input], [__expected, :_expected] ].each do |input_or_expected|
         define_method input_or_expected.last do
           if input_or_expected.first.size == 1
             __send__(input_or_expected.first.first)
@@ -153,7 +153,7 @@ class Spec::Fixture::Base
         end
       end
 
-      [ input, expected ].flatten.each do |item|
+      [ __input, __expected ].flatten.each do |item|
         raise NameError if instance_methods.map{|i| i.to_s }.include? item.to_s
 
         define_method item do
