@@ -10,77 +10,81 @@ end
 task :default => [:spec]
 task :test    => [:spec]
 task :package => [:clean]
-
+begin
 require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.spec_opts = ['--options', 'spec/spec.opts']
-  t.warning = true
-  t.libs << 'lib'
-  t.rcov = true
-  t.rcov_dir = 'doc/output/coverage'
-  t.rcov_opts = ['--exclude', '/*,spec,\.autotest', '-i', 'lib/**/*']
-end
+  Spec::Rake::SpecTask.new(:spec) do |t|
+    t.spec_files = FileList['spec/**/*_spec.rb']
+    t.spec_opts = ['--options', 'spec/spec.opts']
+    t.warning = true
+    t.libs << 'lib'
+    # t.rcov = true
+    # t.rcov_dir = 'doc/output/coverage'
+    # t.rcov_opts = ['--exclude', '/*,spec,\.autotest', '-i', 'lib/**/*']
+  end
 
-desc "Heckle each module and class in turn"
-task :heckle => :spec do
-  root_modules = HECKLE_ROOT_MODULES
-  spec_files = FileList['spec/**/*_spec.rb']
-  
-  current_module, current_method = nil, nil
-  heckle_caught_modules = Hash.new { |hash, key| hash[key] = [] }
-  unhandled_mutations = 0
-  
-  root_modules.each do |root_module|
-    IO.popen("heckle #{root_module} -t #{spec_files}") do |pipe|
-      while line = pipe.gets
-        line = line.chomp
-        
-        if line =~ /^\*\*\*  ((?:\w+(?:::)?)+)#(\w+)/
-          current_module, current_method = $1, $2
-        elsif line == "The following mutations didn't cause test failures:"
-          heckle_caught_modules[current_module] << current_method
-        elsif line == "+++ mutation"
-          unhandled_mutations += 1 
+  desc "Heckle each module and class in turn"
+  task :heckle => :spec do
+    root_modules = HECKLE_ROOT_MODULES
+    spec_files = FileList['spec/**/*_spec.rb']
+
+    current_module, current_method = nil, nil
+    heckle_caught_modules = Hash.new { |hash, key| hash[key] = [] }
+    unhandled_mutations = 0
+
+    root_modules.each do |root_module|
+      IO.popen("heckle #{root_module} -t #{spec_files}") do |pipe|
+        while line = pipe.gets
+          line = line.chomp
+
+          if line =~ /^\*\*\*  ((?:\w+(?:::)?)+)#(\w+)/
+            current_module, current_method = $1, $2
+          elsif line == "The following mutations didn't cause test failures:"
+            heckle_caught_modules[current_module] << current_method
+          elsif line == "+++ mutation"
+            unhandled_mutations += 1
+          end
+
+          puts line
         end
-              
-        puts line
       end
     end
-  end
-  
-  if unhandled_mutations > 0
-    error_message_lines = ["*************\n"]
-    
-    error_message_lines << 
-      "Heckle found #{unhandled_mutations} " + 
-      "mutation#{"s" unless unhandled_mutations == 1} " +
-      "that didn't cause spec violations\n"
+    if unhandled_mutations > 0
+      error_message_lines = ["*************\n"]
 
-    heckle_caught_modules.each do |mod, methods|
       error_message_lines <<
-        "#{mod} contains the following poorly-specified methods:"
-      methods.each do |m| 
-        error_message_lines << " - #{m}"
+        "Heckle found #{unhandled_mutations} " +
+        "mutation#{"s" unless unhandled_mutations == 1} " +
+        "that didn't cause spec violations\n"
+
+      heckle_caught_modules.each do |mod, methods|
+        error_message_lines <<
+          "#{mod} contains the following poorly-specified methods:"
+        methods.each do |m|
+          error_message_lines << " - #{m}"
+        end
+        error_message_lines << ""
       end
-      error_message_lines << ""
+
+      error_message_lines <<
+        "Get your act together and come back " +
+        "when your specs are doing their job!"
+
+      puts "*************"
+      raise error_message_lines.join("\n")
+    else
+      puts "Well done! Your code withstood a heckling."
     end
-    
-    error_message_lines <<
-      "Get your act together and come back " +
-      "when your specs are doing their job!"
-    
-    puts "*************"
-    raise error_message_lines.join("\n")
-  else
-    puts "Well done! Your code withstood a heckling."
   end
+rescue LoadError
 end
 
-require 'spec/rake/verify_rcov'
-RCov::VerifyTask.new(:rcov_veryfy) do |t|
-  t.index_html = "doc/output/coverage/index.html"
-  t.threshold = 100
+begin
+  require 'spec/rake/verify_rcov'
+  RCov::VerifyTask.new(:rcov_veryfy) do |t|
+    t.index_html = "doc/output/coverage/index.html"
+    t.threshold = 100
+  end
+rescue LoadError
 end
 
 task :install do
