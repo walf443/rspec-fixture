@@ -38,7 +38,8 @@ class Spec::Fixture::Base
     @fixtures = data.map do |item|
       fxt, msg = *item
       input, expected = *fxt.to_a.first
-      @class.new input, expected, msg, @filter_of
+      filter_of = instance_variable_defined?('@filter_of') ? @filter_of : nil
+      @class.new input, expected, msg, filter_of
     end.sort_by { rand } # you should write test to pass without order dependency.
   end
 
@@ -68,7 +69,7 @@ class Spec::Fixture::Base
           result = fxt.msg.to_s
         else
           result = fxt.value_of[item]
-          if @desc_filter_of && @desc_filter_of[item]
+          if instance_variable_defined?('@desc_filter_of') && @desc_filter_of && @desc_filter_of[item]
             if @desc_filter_of[item].kind_of? Proc
               result = @desc_filter_of[item].call(result)
             else
