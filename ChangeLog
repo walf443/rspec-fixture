@@ -1,63 +1,189 @@
-----------------------------------------------------------------------
-r3507 (orig r6556):  walf443 | 2008-02-11 17:34:20 +0900
+commit 8740a1ef1b245f9aee00255ec1eb105d4685e79f
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Nov 14 00:41:51 2008 +0900
 
-lang/ruby/rspec-fixture: added DESCRIPTION for Rakefile
-----------------------------------------------------------------------
-r3505 (orig r6554):  walf443 | 2008-02-11 17:23:32 +0900
+    support mutiple examples in with_fixtures context.
 
-lang/ruby/rspec-fixture: wrote README
-----------------------------------------------------------------------
-r3502 (orig r6551):  walf443 | 2008-02-11 16:34:52 +0900
+commit 978d41174796bf6ee7dcd0e97a2d2d448636ec76
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Nov 8 16:14:36 2008 +0900
 
-lang/ruby/rspec-fixture: fix example's output message
-----------------------------------------------------------------------
-r3490 (orig r6539):  walf443 | 2008-02-11 13:04:48 +0900
+    fixed uninintialized instance variable warnings.
 
-lang/ruby/rspec-fixture: 
-  - fix a bug that is 'not converting collectly :msg in description template'. 
-  - add spec-fixture-base spec.
-----------------------------------------------------------------------
-r3475 (orig r6524):  walf443 | 2008-02-11 01:08:54 +0900
+commit 8348e1bcbfc2d026d1a470237d9d220644825caa
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 16 07:35:51 2008 +0900
 
-lang/ruby/rspec-fixture: generated class with filter should behave like 'generated_class'
-----------------------------------------------------------------------
-r3474 (orig r6523):  walf443 | 2008-02-11 01:07:59 +0900
+    change for not raising Error in Rakefile without library.
 
-lang/ruby/rspec-fixture: load library  not in each spec file, but spec_helper.rb.
-----------------------------------------------------------------------
-r3473 (orig r6522):  walf443 | 2008-02-11 00:59:39 +0900
+commit 1fd4343bbb61650cea3b298ad5c4878e019bcffe
+Author: Keiji, Yoshimi <walf443 at gmail dot com>
+Date:   Sat May 3 16:24:22 2008 +0900
 
-lang/ruby/rspec-fixture: delete extra file and change to load library in shared helper.
-----------------------------------------------------------------------
-r3472 (orig r6521):  walf443 | 2008-02-11 00:57:32 +0900
+    it may be better to return nil
 
-lang/ruby/rspec-fixture: add _define_fixture spec and fix some bug.
-----------------------------------------------------------------------
-r3471 (orig r6520):  walf443 | 2008-02-11 00:30:29 +0900
+commit 8767a87d37c113ec6e56b117b927da40218b1da8
+Author: Keiji, Yoshimi <walf443 at gmail dot com>
+Date:   Sat May 3 16:08:33 2008 +0900
 
-lang/ruby/rspc-fixture: fix spec task for executing coverage test collectly.
-----------------------------------------------------------------------
-r3453 (orig r6502):  walf443 | 2008-02-10 18:52:37 +0900
+    change variable name.
 
-lang/ruby/rspec-fixture: add spec for with_fixture method
-----------------------------------------------------------------------
-r3415 (orig r6464):  walf443 | 2008-02-10 05:02:25 +0900
+commit e8848263e3a766d3cc1cd931ba8fff39a7c17666
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sat Feb 16 13:18:39 2008 +0000
 
-lang/ruby/rspec-fixture:
- - support desc_filters for customizing description flexibly.
- - change desc_template value to use raw input value's inspect
-----------------------------------------------------------------------
-r3408 (orig r6457):  walf443 | 2008-02-10 01:39:04 +0900
+    lang/ruby/rspec-fixture: added named filter feature.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6782 d0d07461-0603-4401-acd4-de1884942a52
 
-lang/ruby/rspec-fixture: 
- - raise NameError when with_fixtures arg duplicate to reserved name.
- - just use msg when description template was not exist.
-----------------------------------------------------------------------
-r3404 (orig r6453):  walf443 | 2008-02-10 00:06:50 +0900
+commit 5e2532abc128d35c36ad2f73fa817ef70bffa544
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Wed Feb 13 23:50:34 2008 +0000
 
-lang/ruby/rspec-fixture: support filters, spec template for description
-----------------------------------------------------------------------
-r3314 (orig r6363):  walf443 | 2008-02-08 09:42:35 +0900
+    lang/ruby/rspec-fixture: changed to shuffle fixtures for not writing a test with order dependency.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6657 d0d07461-0603-4401-acd4-de1884942a52
 
-lang/ruby/rspec-fixture: import new project.
-----------------------------------------------------------------------
+commit 5953fa205a8da67fd389b5ab9dbb606e39132e1a
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Tue Feb 12 15:30:01 2008 +0000
+
+    lang/ruby/rspec-fixture: changed _example method to behave same as _input method.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6614 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 00836de4fafc20e520937b9c66b717cfe27d4744
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Mon Feb 11 09:24:27 2008 +0000
+
+    lang/ruby/rspec-fixture: added rubyforge project id of this project.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6560 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 543a585aedb5009348a882e99777c0b15d89b225
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Mon Feb 11 09:09:12 2008 +0000
+
+    lang/ruby/rspec-fixture:
+     - updated ChangeLog from svk log
+     - added document for Spec::Fixture::Base's each methods.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6558 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 8f379c8361e34118e5e3704175afd4072ef4999d
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Mon Feb 11 08:34:20 2008 +0000
+
+    lang/ruby/rspec-fixture: added DESCRIPTION for Rakefile
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6556 d0d07461-0603-4401-acd4-de1884942a52
+
+commit e694dd45f0eacf763591cb073a2cdc0ccc47a583
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Mon Feb 11 08:23:32 2008 +0000
+
+    lang/ruby/rspec-fixture: wrote README
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6554 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 9f5bdbf58798241af016e515703958ca2ef3846b
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Mon Feb 11 07:34:52 2008 +0000
+
+    lang/ruby/rspec-fixture: fix example's output message
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6551 d0d07461-0603-4401-acd4-de1884942a52
+
+commit f403cb774c0dc96ac76e4e2edf8f7da552f5a076
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Mon Feb 11 04:04:48 2008 +0000
+
+    lang/ruby/rspec-fixture:
+      - fix a bug that is 'not converting collectly :msg in description template'.
+      - add spec-fixture-base spec.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6539 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 7035e40723789275086d305d1f484ff1eb27b013
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sun Feb 10 16:08:54 2008 +0000
+
+    lang/ruby/rspec-fixture: generated class with filter should behave like 'generated_class'
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6524 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 5ee9583f75ff3aeb51146081ee50afc177248d15
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sun Feb 10 16:07:59 2008 +0000
+
+    lang/ruby/rspec-fixture: load library  not in each spec file, but spec_helper.rb.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6523 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 33712131a5425d9eca0416b72ba0300588db76ad
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sun Feb 10 15:59:39 2008 +0000
+
+    lang/ruby/rspec-fixture: delete extra file and change to load library in shared helper.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6522 d0d07461-0603-4401-acd4-de1884942a52
+
+commit ffbc76bf35c2960ff27e951b648b61685f7260b2
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sun Feb 10 15:57:32 2008 +0000
+
+    lang/ruby/rspec-fixture: add _define_fixture spec and fix some bug.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6521 d0d07461-0603-4401-acd4-de1884942a52
+
+commit b043faecc73bfafae9eab4eccf6dfe5f9bda2922
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sun Feb 10 15:30:29 2008 +0000
+
+    lang/ruby/rspc-fixture: fix spec task for executing coverage test collectly.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6520 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 1c84a9cba1255dc566e6a231cc8ef76f78b4592f
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sun Feb 10 09:52:37 2008 +0000
+
+    lang/ruby/rspec-fixture: add spec for with_fixture method
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6502 d0d07461-0603-4401-acd4-de1884942a52
+
+commit e37779df95db12d2fef080e3cc890db84a408ab4
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sat Feb 9 20:02:25 2008 +0000
+
+    lang/ruby/rspec-fixture:
+     - support desc_filters for customizing description flexibly.
+     - change desc_template value to use raw input value's inspect
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6464 d0d07461-0603-4401-acd4-de1884942a52
+
+commit f31cc321b6329b2f6e9121110d91932410ed87e3
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sat Feb 9 16:39:04 2008 +0000
+
+    lang/ruby/rspec-fixture:
+     - raise NameError when with_fixtures arg duplicate to reserved name.
+     - just use msg when description template was not exist.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6457 d0d07461-0603-4401-acd4-de1884942a52
+
+commit 6439b8c043f58102aa1ce878d89416625aa9cefe
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Sat Feb 9 15:06:50 2008 +0000
+
+    lang/ruby/rspec-fixture: support filters, spec template for description
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6453 d0d07461-0603-4401-acd4-de1884942a52
+
+commit d9a069ff5d8ab781d587fce2ec1a4e88fe8ebe8e
+Author: walf443 <walf443@d0d07461-0603-4401-acd4-de1884942a52>
+Date:   Fri Feb 8 00:42:35 2008 +0000
+
+    lang/ruby/rspec-fixture: import new project.
+    
+    git-svn-id: http://svn.coderepos.org/share/lang/ruby/rspec-fixture/trunk@6363 d0d07461-0603-4401-acd4-de1884942a52
