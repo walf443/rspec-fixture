@@ -25,10 +25,10 @@ class Spec::Fixture::Base
   # input and expected was a Hash in input has two or larger members. 
   # When input and expected has only a member, input has filtered value.
   def it desc=nil, &example
-    if desc
-      @desc_template = desc
-    end
-    @example_shared_runner = example
+    @desc_template ||= []
+    @desc_template << desc
+    @example_shared_runner ||= []
+    @example_shared_runner << example
   end
 
   # You specify test data in this methods.
@@ -61,9 +61,9 @@ class Spec::Fixture::Base
     @desc_filter_of = hash
   end
 
-  def generate_msg fxt #:nodoc:
-    if @desc_template
-      msg = @desc_template
+  def generate_msg fxt, desc_template #:nodoc:
+    if desc_template
+      msg = desc_template
       [ fxt._members, :msg ].flatten.each do |item|
         if item == :msg
           result = fxt.msg.to_s
@@ -102,11 +102,15 @@ class Spec::Fixture::Base
 
   def run #:nodoc:
     fixture = self
+    desc_template = @desc_template
     @binding.module_eval do
       if fixture.fixtures
         fixture.fixtures.each do |fxt|
-          it fixture.generate_msg(fxt) do
-            fixture.example_shared_runner.call(fxt._input, fxt._expected)
+          fixture.example_shared_runner.sort_by { rand }.each_with_index do |runner,index|
+            msg = fixture.generate_msg(fxt, desc_template.nil? ? nil : desc_template[index] )
+            it msg do
+              runner.call(fxt._input, fxt._expected)
+            end
           end
         end
       end

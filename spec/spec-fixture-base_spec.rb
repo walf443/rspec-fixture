@@ -40,7 +40,7 @@ describe Spec::Fixture::Base do
     end
 
     it 'should return nil' do
-      @fixture_base.generate_msg(@fxt).should be_nil
+      @fixture_base.generate_msg(@fxt, nil).should be_nil
     end
   end
 
@@ -51,7 +51,7 @@ describe Spec::Fixture::Base do
     end
 
     it 'should return msg' do
-      @fixture_base.generate_msg(@fxt).should == "fuga"
+      @fixture_base.generate_msg(@fxt, nil).should == "fuga"
     end
   end
 
@@ -70,14 +70,12 @@ describe Spec::Fixture::Base do
 
     it 'should convert :symbol to raw member inspect' do
       [:input, :expected].each do |member|
-        @fixture_base.instance_variable_set('@desc_template', ":#{member}")
-        @fixture_base.generate_msg(@fxt).should == '"raw value"'
+        @fixture_base.generate_msg(@fxt, ":#{member}").should == '"raw value"'
       end
     end
 
     it 'should convert :msg to fixture#msg value' do
-      @fixture_base.instance_variable_set('@desc_template', ':msg')
-      @fixture_base.generate_msg(@fxt).should == "fuga"
+      @fixture_base.generate_msg(@fxt, ':msg').should == "fuga"
     end
   end
 
@@ -101,14 +99,12 @@ describe Spec::Fixture::Base do
 
     it 'should convert :symbol to desc_filtered member value with sending symbol method to raw value' do
       [:input, :expected].each do |member|
-        @fixture_base.instance_variable_set('@desc_template', ":#{member}")
-        @fixture_base.generate_msg(@fxt).should == 'raw value'.upcase
+        @fixture_base.generate_msg(@fxt, ":#{member}").should == 'raw value'.upcase
       end
     end
 
     it 'should convert :msg to fixture#msg value' do
-      @fixture_base.instance_variable_set('@desc_template', ':msg')
-      @fixture_base.generate_msg(@fxt).should == "fuga"
+      @fixture_base.generate_msg(@fxt, ":msg").should == "fuga"
     end
   end
 
@@ -131,14 +127,12 @@ describe Spec::Fixture::Base do
 
     it 'should convert :symbol to desc_filtered member value with sending symbol method to raw value' do
       [:input, :expected].each do |member|
-        @fixture_base.instance_variable_set('@desc_template', ":#{member}")
-        @fixture_base.generate_msg(@fxt).should == 'raw value'
+        @fixture_base.generate_msg(@fxt, ":#{member}").should == 'raw value'
       end
     end
 
     it 'should convert :msg to fixture#msg value' do
-      @fixture_base.instance_variable_set('@desc_template', ':msg')
-      @fixture_base.generate_msg(@fxt).should == "fuga"
+      @fixture_base.generate_msg(@fxt, ":msg").should == "fuga"
     end
   end
 
@@ -161,14 +155,12 @@ describe Spec::Fixture::Base do
 
     it 'should convert :symbol to desc_filtered member value with sending symbol method to raw value in array order' do
       [:input, :expected].each do |member|
-        @fixture_base.instance_variable_set('@desc_template', ":#{member}")
-        @fixture_base.generate_msg(@fxt).should == 'raw value'.upcase.reverse
+        @fixture_base.generate_msg(@fxt, ":#{member}").should == 'raw value'.upcase.reverse
       end
     end
 
     it 'should convert :msg to fixture#msg value' do
-      @fixture_base.instance_variable_set('@desc_template', ':msg')
-      @fixture_base.generate_msg(@fxt).should == "fuga"
+      @fixture_base.generate_msg(@fxt, ":msg").should == "fuga"
     end
   end
 
@@ -193,13 +185,12 @@ describe Spec::Fixture::Base do
     it 'should convert :symbol to desc_filtered member value with applying Proc result' do
       [:input, :expected].each do |member|
         @fixture_base.instance_variable_set('@desc_template', ":#{member}")
-        @fixture_base.generate_msg(@fxt).should == @proc.call('raw value')
+        @fixture_base.generate_msg(@fxt, ":#{member}").should == @proc.call('raw value')
       end
     end
 
     it 'should convert :msg to fixture#msg value' do
-      @fixture_base.instance_variable_set('@desc_template', ':msg')
-      @fixture_base.generate_msg(@fxt).should == "fuga"
+      @fixture_base.generate_msg(@fxt, ":msg").should == "fuga"
     end
   end
 
