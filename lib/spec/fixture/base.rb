@@ -108,8 +108,16 @@ class Spec::Fixture::Base
         fixture.fixtures.each do |fxt|
           fixture.example_shared_runner.sort_by { rand }.each_with_index do |runner,index|
             msg = fixture.generate_msg(fxt, desc_template.nil? ? nil : desc_template[index] )
-            it msg do
-              runner.call(fxt._input, fxt._expected)
+            if fxt.msg && fxt.msg =~ /^TODO:/
+              it msg do
+                pending(fxt.msg) do
+                  runner.call(fxt._input, fxt._expected)
+                end
+              end
+            else
+              it msg do
+                runner.call(fxt._input, fxt._expected)
+              end
             end
           end
         end
